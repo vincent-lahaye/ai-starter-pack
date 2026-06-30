@@ -1,0 +1,2 @@
+# Personal bash config (persisted across rebuilds, host-editable). Add your aliases/exports here.
+alias ll='ls -alFh'

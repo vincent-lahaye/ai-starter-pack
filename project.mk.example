@@ -1,0 +1,50 @@
+# project.mk — the project seam for ai-starter-pack.
+#
+# Copy this file to `project.mk` (which is gitignored) and edit the variables
+# that match your stack:
+#
+#     cp project.mk.example project.mk
+#
+# The root Makefile does `-include project.mk`, so every variable here is
+# OPTIONAL — the harness runs before you wire anything. The harness skills and
+# the orchestrator's verify step read these variables instead of hardcoding
+# project-specific commands, so this one file is the only place your stack
+# leaks into the method.
+#
+# Each variable is shown commented out, with a few realistic examples. Uncomment
+# and adapt ONE line per variable (or write your own). Leave a variable unset if
+# it does not apply to your project (e.g. RESET_DB_CMD when you have no DB).
+
+# BOOTSTRAP_CMD — install all dependencies / prepare a fresh checkout.
+# Invoked by `make bootstrap`.
+# BOOTSTRAP_CMD = npm ci
+# BOOTSTRAP_CMD = uv sync && npm ci
+# BOOTSTRAP_CMD = go mod download
+
+# TEST_CMD — run your FULL test suite. The orchestrator re-runs this itself
+# before accepting any Codex lot (author != approver), so it must be the real,
+# complete suite — not a smoke subset. Invoked by `make test`.
+# TEST_CMD = npm test
+# TEST_CMD = uv run pytest -q
+# TEST_CMD = go test ./...
+
+# LINT_CMD — lint / static-check the codebase. Invoked by `make lint`.
+# LINT_CMD = npm run lint
+# LINT_CMD = uvx ruff check .
+# LINT_CMD = golangci-lint run
+
+# RESET_DB_CMD — wipe and re-create the project database from scratch.
+# Leave unset if your project has no database. Invoked by `make reset-db`.
+# RESET_DB_CMD = npm run db:reset
+# RESET_DB_CMD = uv run python -m yourapp.migrate --fresh
+
+# UP_CMD — start the project's backing services (database, cache, queue, ...).
+# Leave unset if your project needs none. Invoked by `make up`.
+# UP_CMD = docker compose up -d
+# UP_CMD = ./scripts/services-up.sh
+
+# DEV_CMD — run the dev servers (backend + frontend, watch mode). This is the
+# long-running process you drive in the browser QA gate. Invoked by `make dev`.
+# DEV_CMD = npm run dev
+# DEV_CMD = make -C app dev
+# DEV_CMD = uv run uvicorn app:create --reload

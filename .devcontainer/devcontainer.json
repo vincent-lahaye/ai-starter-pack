@@ -1,0 +1,57 @@
+{
+  "name": "ai-starter-pack",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceFolder": "/workspaces/ai-starter-pack",
+  "remoteUser": "vscode",
+  "mounts": [
+    // Persist Claude's data (sessions, memory, todos) across container rebuilds
+    // and keep it inspectable from the host at .devcontainer/.claude-data/.
+    // (Claude's main config ~/.claude.json is symlinked INTO this dir by
+    // post-create.sh, so the OAuth login + onboarding survive rebuilds too.)
+    "source=${localWorkspaceFolder}/.devcontainer/.claude-data,target=/home/vscode/.claude,type=bind,consistency=cached",
+    // Persist Codex's data (auth, config, sessions, history, plugins, skills)
+    // across rebuilds, inspectable from the host at .devcontainer/.codex-data/.
+    "source=${localWorkspaceFolder}/.devcontainer/.codex-data,target=/home/vscode/.codex,type=bind,consistency=cached",
+    // Per-developer personal state — shell history + personal dotfiles — kept in
+    // a host-visible, gitignored folder so it persists across rebuilds AND is
+    // editable from the host. The image stays the source of truth for the base
+    // home; only these explicit paths are personal. See .devcontainer/.home/.
+    "source=${localWorkspaceFolder}/.devcontainer/.home,target=/home/vscode/.home,type=bind,consistency=cached"
+  ],
+  // Generic app ports — harmless if the owner's project doesn't use them.
+  "forwardPorts": [3000, 8000],
+  "portsAttributes": {
+    "3000": { "label": "App (frontend / dev server)" },
+    "8000": { "label": "App (backend / API)" }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        // New terminals open as editor-area tabs (not the bottom panel).
+        "terminal.integrated.defaultLocation": "editor",
+        "task.allowAutomaticTasks": "on",
+        "security.workspace.trust.enabled": false,
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/.pytest_cache": true,
+          "**/.next": true,
+          "**/.venv": true
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "redhat.vscode-yaml",
+        "davidanson.vscode-markdownlint",
+        "github.vscode-pull-request-github",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
+}

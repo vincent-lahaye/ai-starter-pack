@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "Versioned source for the CONTAINER's ~/.claude/settings.json. post-create.sh copies this to $HOME/.claude/settings.json. A committed project .claude/settings.json already wins over user scope; this is a defence-in-depth filet that guarantees the anti-attribution default even if a Claude session runs with the container HOME and no project scope. Never written to the host HOME.",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "includeCoAuthoredBy": false
+}

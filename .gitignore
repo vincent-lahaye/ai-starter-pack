@@ -1,0 +1,43 @@
+# ai-starter-pack — ignored paths.
+#
+# NOTE: the .planner/*.md dossier skeletons (00-CHARTER.md, 01-STATE.md, ...,
+# 99-JOURNAL.md, tasks/_TEMPLATE.md) ARE tracked. Do not add a blanket
+# `.planner/` ignore — only the working subdirectories below are ignored.
+
+# Dependencies
+node_modules/
+
+# Project seam (per-checkout; copied from project.mk.example)
+project.mk
+
+# Relay / ntfy secrets and logs
+.claude/hooks/ntfy.env
+.handoff/logs/*.log
+
+# Planner working artifacts (the .md dossier is tracked; these are scratch)
+.planner/captures/
+.planner/research/
+
+# Devcontainer persistence bind-mounts (host-visible, per-developer state)
+.devcontainer/.claude-data/
+.devcontainer/.codex-data/
+.devcontainer/.home/
+
+# gstack browser-QA (third-party; never commit the binary or its deps)
+.claude/skills/gstack/browse/dist/
+.claude/skills/gstack/**/node_modules/
+
+# Codex scratch briefs / outputs
+codex-*.md
+
+# Build output / caches
+.next/
+dist/
+__pycache__/
+.venv/
+
+# OS cruft
+.DS_Store
+
+# Always keep placeholder files that hold otherwise-empty tracked dirs
+!.gitkeep
