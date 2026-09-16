@@ -147,9 +147,8 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 RUN npm install -g @openai/codex
 
 # Multi-agent orchestration helpers: omc (oh-my-claudecode) for Claude Code and
-# omx (oh-my-codex) for Codex. Best-effort: exact package names can drift, and a
-# missing helper must not fail the image build (the loop runs without them).
-RUN npm install -g oh-my-claudecode || true \
-    && npm install -g oh-my-codex || true
+# omx (oh-my-codex) for Codex. OMX is required and its installation must succeed.
+RUN npm install -g oh-my-claudecode || true
+RUN npm install -g oh-my-codex && codex --version && omx --version
 
 WORKDIR /workspaces/ai-starter-pack
